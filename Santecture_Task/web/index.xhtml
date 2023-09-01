@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Hr</title>
+        
+    </h:head>
+    <h:body  style="background-color: #eceff5; background-position: center center;">
+        <h:outputScript library="js" name="bootstrap.js"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+
+<div class="container card-body">
+    
+    <h:form id="messages-form">
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate />
+        </p:messages>
+    </h:form>
+    <div class="card" >
+        <div class="card-header">
+        <dive>Add Employee</dive>
+    </div>
+         <h:form id="addForm">
+        
+   <div class="form-group row" >
+       <div class="col-sm-2" align="center">
+        <h:outputLabel>Gender</h:outputLabel> 
+    </div>
+    <div class="col-sm-10">
+      <div >
+          <p:selectOneMenu id="gender" value="#{employeeManagerBean.newEmployee.gender}" style="width:125px">
+              <f:selectItem itemLabel="select" itemValue="#{null}" />
+            <f:selectItem itemLabel="Male" itemValue="Male" />
+            <f:selectItem itemLabel="Female" itemValue="Female" />
+        </p:selectOneMenu>
+       
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" align="center" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      
+        <p:inputText type="text" value="#{employeeManagerBean.newEmployee.name}" style="width:300px" class="form-control" id="inputName" placeholder="Name"></p:inputText>
+    </div>
+  </div>
+                    
+  <div class="form-group row">
+      <div align="center" class="col-sm-2">Department</div>
+    <div class="col-sm-10">
+      <div >
+          <p:selectOneMenu id="department"  value="#{employeeManagerBean.newEmployee.department_id.id}" style="width:125px">
+            <f:selectItem itemLabel="select" itemValue="#{null}" />
+            <f:selectItems value="#{employeeManagerBean.departmentList}" var="dept" itemLabel="#{dept.name}" itemValue="#{dept.id}" />
+        </p:selectOneMenu>
+       
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+      <div class="col-sm-2" align="center">
+        <h:commandButton   value="Add Employee"   class="btn btn-primary">
+            <p:ajax process="@form addForm result-form result-form:employee-table"  event="click" listener="#{employeeManagerBean.addEmployee()}" update="result-form addForm messages-form:messages result-form:employee-table" />
+        </h:commandButton>
+    </div>
+      <div class="col-sm-4">
+        <h:commandButton   value="Reset"   class="btn btn-danger">
+            <p:ajax process="@form addForm result-form"  event="click" listener="#{employeeManagerBean.resetPage()}" update="result-form addForm messages-form:messages result-form:employee-table" />
+        </h:commandButton>
+    </div>
+  </div>
+</h:form>
+    </div>
+   
+    </div>
+    <h:form id="result-form">
+    
+    <div class="container">
+        <p:dataTable id="employee-table" rendered="true" var="employee"  value="#{employeeManagerBean.employeeList}">
+    <p:column headerText="Id">
+        <h:outputText value="#{employee.id}" />
+    </p:column>
+ 
+    <p:column headerText="Name">
+        <h:outputText value="#{employee.name}" />
+    </p:column>
+ 
+    <p:column headerText="Gender">
+        <h:outputText value="#{employee.gender}" />
+    </p:column>
+ 
+    <p:column headerText="Department">
+        <h:outputText value="#{employee.department_id.name}" />
+    </p:column>
+</p:dataTable>
+</div>
+    </h:form>
+
+    </h:body>
+</html>
+
